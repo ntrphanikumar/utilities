@@ -44,3 +44,10 @@ Temporary Items
 .idea
 *.iml
 target
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
