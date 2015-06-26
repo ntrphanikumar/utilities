@@ -1,4 +1,6 @@
-package utilities.phani.chitcalculator;
+package utilities.phani.chitcalculator.service;
+
+import utilities.phani.chitcalculator.model.Chit;
 
 public class ChitCalculator {
     private final FDCalculator fdCalculator;
@@ -20,12 +22,12 @@ public class ChitCalculator {
     }
 
     public long profitableBid(Chit chit, double rateOfInterestOnDeposit) {
-        long minDepositAmount = fdCalculator.depositAmount(chit.getChitValue(), chit.remainingMonths(), 9);
+        long minDepositAmount = fdCalculator.depositAmount(chit.getChitValue(), chit.remainingMonths(), rateOfInterestOnDeposit);
         long commission = commission(chit);
 
-        long minimumDeductions = chit.getChitValue() - (commission + taxOnCommission(commission));
-        if(minDepositAmount > minimumDeductions) {
-            throw new RuntimeException("Cannot determine profitable bid.");
+        long maxRecievableAmountAfterDeductions = chit.getChitValue() - (commission + taxOnCommission(commission));
+        if(minDepositAmount > maxRecievableAmountAfterDeductions) {
+            throw new ProfitableBidNotFoundException();
         }
 
         long finalAmountOnProfitableBid = nearestGreaterMultiple(minDepositAmount, chit.getMinBidIncrement());
@@ -48,15 +50,17 @@ public class ChitCalculator {
     }
 
     public String bidSummary(Chit chit, double rateOfInterest) {
-        long profitableBid = profitableBid(chit, rateOfInterest);
-        long dividendOnProfitableBid = dividendOnBid(chit, profitableBid);
-        long finalAmount = finalAmount(chit, profitableBid);
-        long maturityAmount = fdCalculator.maturityAmount(finalAmount, chit.remainingMonths(), rateOfInterest);
-
-        return String.format("Profitable bid: Rs %s.\nDividend: Rs %s.\nAmount: Rs %s.\nFDMaturity amount: Rs %s.", profitableBid, dividendOnProfitableBid, finalAmount, maturityAmount);
+        return bidSummary(chit, rateOfInterest, profitableBid(chit, rateOfInterest));
     }
 
-    private long commission(Chit chit) {
+    public String bidSummary(Chit chit, double rateOfInterest, long bid) {
+        long dividendOnProfitableBid = dividendOnBid(chit, bid);
+        long finalAmount = finalAmount(chit, bid);
+        long maturityAmount = fdCalculator.maturityAmount(finalAmount, chit.remainingMonths(), rateOfInterest);
+        return String.format("Max suggested bid: Rs %s.\nDividend: Rs %s.\nAmount: Rs %s.\nFDMaturity amount: Rs %s.", bid, dividendOnProfitableBid, finalAmount, maturityAmount);
+    }
+
+    public long commission(Chit chit) {
         return chit.getChitValue()*commissionPercent/100;
     }
 

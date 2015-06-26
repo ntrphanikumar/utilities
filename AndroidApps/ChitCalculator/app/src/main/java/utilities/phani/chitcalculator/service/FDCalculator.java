@@ -1,4 +1,4 @@
-package utilities.phani.chitcalculator;
+package utilities.phani.chitcalculator.service;
 
 public class FDCalculator {
     public long maturityAmount(long deposit, int termInMonths, double rateOfInterest) {

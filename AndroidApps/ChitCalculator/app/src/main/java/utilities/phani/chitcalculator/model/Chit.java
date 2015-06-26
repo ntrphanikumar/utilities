@@ -1,4 +1,4 @@
-package utilities.phani.chitcalculator;
+package utilities.phani.chitcalculator.model;
 
 public class Chit {
     private final long chitValue;

@@ -1,7 +1,6 @@
 package utilities.phani.chitcalculator;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import utilities.phani.chitcalculator.model.Chit;
+import utilities.phani.chitcalculator.service.ChitCalculator;
+import utilities.phani.chitcalculator.service.FDCalculator;
+import utilities.phani.chitcalculator.service.ProfitableBidNotFoundException;
 
 public class ChitFragment extends Fragment {
     private final ChitCalculator chitCalculator = new ChitCalculator(new FDCalculator(), 5, 14);
@@ -56,11 +58,15 @@ public class ChitFragment extends Fragment {
         calculateButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Chit chit = null;
                 try {
-                    Chit chit = new Chit(chitValue(), totalMonths(), completedMonths());
+                    chit = new Chit(chitValue(), totalMonths(), completedMonths());
                     bidText().setText(chitCalculator.bidSummary(chit, rateOfInterest()));
+                } catch(ProfitableBidNotFoundException e) {
+                    long commission = chitCalculator.commission(chit);
+                    bidText().setText("No bid can fetch profit.\n"+chitCalculator.bidSummary(chit, rateOfInterest(), commission));
                 } catch (RuntimeException e) {
-                    bidText().setText("Please provide valid input.");
+                    bidText().setText("Invalid inputs.\n"+e.getMessage());
                 }
             }
         });
