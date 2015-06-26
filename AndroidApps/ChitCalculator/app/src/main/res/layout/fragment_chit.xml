@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical" >
+
+    <EditText android:id="@+id/chit_value"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/chit_value" />
+
+    <TextView
+        android:text="@string/total_months_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Spinner android:id="@+id/total_months"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/months"
+        android:prompt="@string/total_months_prompt"></Spinner>
+
+    <EditText android:id="@+id/completed_months"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/completed_months_prompt" />
+
+    <EditText android:id="@+id/roi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/fd_roi" />
+
+    <Button android:id="@+id/calculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/calculate_button_text"/>
+
+    <Button android:id="@+id/clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clear_button_text"/>
+
+    <TextView android:id="@+id/bid_text"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:textColor="#000"
+        android:background="#eee"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ChitCalculator</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="chit_value">Chit value</string>
+
+    <string name="calculate_button_text">Calculate</string>
+    <string name="clear_button_text">Clear</string>
+
+    <string name="total_months_prompt">Total months</string>
+    <string name="completed_months_prompt">Completed months</string>
+
+    <string name="fd_roi">Fixed deposit ROI</string>
+
+    <string-array name="months">
+        <item>50</item>
+        <item>40</item>
+        <item>25</item>
+    </string-array>
+</resources>
