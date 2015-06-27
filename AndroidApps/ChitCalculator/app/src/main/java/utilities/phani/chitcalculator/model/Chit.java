@@ -1,18 +1,23 @@
 package utilities.phani.chitcalculator.model;
 
 public class Chit {
-    private final long chitValue;
+    private final long chitValue, dividendAlreadyRecieved;
     private final int months, completedMonths, minBidIncrement;
 
     public Chit(long chitValue, int months, int completedMonths) {
-        this(chitValue, months, completedMonths, 100);
+        this(chitValue, months, completedMonths, 0);
     }
 
-    public Chit(long chitValue, int months, int completedMonths, int minBidIncrement) {
+    public Chit(long chitValue, int months, int completedMonths, long dividendAlreadyRecieved) {
+        this(chitValue, months, completedMonths, dividendAlreadyRecieved, 100);
+    }
+
+    public Chit(long chitValue, int months, int completedMonths, long dividendAlreadyRecieved, int minBidIncrement) {
         this.chitValue=chitValue;
         this.months=months;
         this.completedMonths=completedMonths;
         this.minBidIncrement = minBidIncrement;
+        this.dividendAlreadyRecieved = dividendAlreadyRecieved;
         if(chitValue%months>0) {
             throw new IllegalArgumentException("Invalid chit details: "+ this.toString());
         }
@@ -48,5 +53,13 @@ public class Chit {
 
     public int remainingMonths() {
         return months - completedMonths -1;
+    }
+
+    public long getDividendAlreadyRecieved() {
+        return dividendAlreadyRecieved;
+    }
+
+    public long minProfitableAmount() {
+        return chitValue - dividendAlreadyRecieved;
     }
 }

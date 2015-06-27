@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
@@ -13,40 +13,88 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="@string/chit_value" />
+        android:text="500000"
+        android:hint="@string/chit_value"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Dividend received"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:inputType="number"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/roi"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <EditText android:id="@+id/dividend_received"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:text="0"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_alignRight="@+id/roi"
+        android:layout_alignEnd="@+id/roi" />
 
     <TextView
         android:text="@string/total_months_prompt"
         android:layout_width="wrap_content"
+        android:textSize="14sp"
         android:inputType="number"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_below="@+id/dividend_received"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
     <Spinner android:id="@+id/total_months"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/months"
-        android:prompt="@string/total_months_prompt"></Spinner>
+        android:prompt="@string/total_months_prompt"
+        android:spinnerMode="dialog"
+        android:layout_alignTop="@+id/textView"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_marginLeft="42dp"
+        android:layout_marginStart="42dp"></Spinner>
 
     <EditText android:id="@+id/completed_months"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="@string/completed_months_prompt" />
+        android:hint="@string/completed_months_prompt"
+        android:layout_below="@+id/total_months"
+        android:layout_toLeftOf="@+id/dividend_received"
+        android:layout_toStartOf="@+id/dividend_received" />
 
     <EditText android:id="@+id/roi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:hint="@string/fd_roi" />
+        android:hint="@string/fd_roi"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/total_months"
+        android:layout_alignEnd="@+id/total_months"
+        android:layout_toRightOf="@+id/chit_value"
+        android:layout_toEndOf="@+id/chit_value" />
 
     <Button android:id="@+id/calculate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/calculate_button_text"/>
+        android:text="@string/calculate_button_text"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/completed_months"
+        android:layout_alignEnd="@+id/completed_months" />
 
     <Button android:id="@+id/clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/clear_button_text"/>
+        android:text="@string/clear_button_text"
+        android:layout_alignTop="@+id/calculate"
+        android:layout_toRightOf="@+id/chit_value"
+        android:layout_toEndOf="@+id/chit_value" />
 
     <TextView android:id="@+id/bid_text"
         android:paddingLeft="16dp"
@@ -55,7 +103,11 @@
         android:paddingBottom="16dp"
         android:textColor="#000"
         android:background="#eee"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calculate"
+        android:layout_alignRight="@+id/dividend_received"
+        android:layout_alignEnd="@+id/dividend_received"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

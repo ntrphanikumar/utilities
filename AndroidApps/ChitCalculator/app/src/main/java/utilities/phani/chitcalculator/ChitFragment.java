@@ -1,12 +1,14 @@
 package utilities.phani.chitcalculator;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -58,24 +60,31 @@ public class ChitFragment extends Fragment {
         calculateButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeypad();
                 Chit chit = null;
                 try {
-                    chit = new Chit(chitValue(), totalMonths(), completedMonths());
+                    chit = new Chit(chitValue(), totalMonths(), completedMonths(), dividendReceived());
                     bidText().setText(chitCalculator.bidSummary(chit, rateOfInterest()));
-                } catch(ProfitableBidNotFoundException e) {
-                    long commission = chitCalculator.commission(chit);
-                    bidText().setText("No bid can fetch profit.\n"+chitCalculator.bidSummary(chit, rateOfInterest(), commission));
+                } catch (ProfitableBidNotFoundException e) {
+                    long minBid = chitCalculator.minBid(chit);
+                    bidText().setText("No bid can fetch profit.\n" + chitCalculator.bidSummary(chit, rateOfInterest(), minBid));
                 } catch (RuntimeException e) {
-                    bidText().setText("Invalid inputs.\n"+e.getMessage());
+                    bidText().setText("Invalid inputs.\n" + e.getMessage());
                 }
             }
         });
         clearButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeypad();
                 clear();
             }
         });
+    }
+
+    private void hideKeypad() {
+        InputMethodManager inputManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     /**
@@ -125,6 +134,10 @@ k2     * fragment to allow an interaction in this fragment to be communicated
         return (EditText) getActivity().findViewById(R.id.completed_months);
     }
 
+    private EditText dividendReceivedField() {
+        return (EditText) getActivity().findViewById(R.id.dividend_received);
+    }
+
     private long chitValue() {
         return Long.parseLong(chitValueField().getText().toString());
     }
@@ -135,6 +148,10 @@ k2     * fragment to allow an interaction in this fragment to be communicated
 
     private int completedMonths() {
         return Integer.parseInt(completedMonthsField().getText().toString());
+    }
+
+    private long dividendReceived() {
+        return Long.parseLong(dividendReceivedField().getText().toString());
     }
 
     public void clear() {
